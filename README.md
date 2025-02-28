@@ -26,3 +26,29 @@ Manejo de Intentos Fallidos de Inicio de Sesión
  
 Rutas de la Aplicación
 Ruta Principal (/)
+index(): Renderiza la página de bienvenida.
+Utiliza render_template_string para devolver un HTML simple que incluye enlaces a las páginas de inicio de sesión, registro y comentarios.
+Ruta de Registro (/register)
+   
+register(): Maneja el registro de nuevos usuarios.
+Si se envía un formulario (método POST), se obtiene el nombre de usuario y la contraseña, se genera un hash de la contraseña y se inserta en la base de datos.
+Si se accede a la ruta mediante GET, se muestra el formulario de registro.
+Ruta de Inicio de Sesión (/login)
+   
+ 
+login(): Maneja el inicio de sesión de los usuarios.
+Si se envía un formulario (método POST), se verifica si el usuario está bloqueado por múltiples intentos fallidos.
+Si no está bloqueado, se busca al usuario en la base de datos y se verifica la contraseña.
+Si las credenciales son correctas, se inicia la sesión y se redirige a la página de comentarios. Si no, se incrementa el contador de intentos fallidos y se muestra un mensaje de error.
+Ruta de Comentarios (/comments)
+ 
+   
+comments(): Permite a los usuarios autenticados dejar comentarios.
+Si el usuario no está autenticado (no hay user_id en la sesión), se redirige a la página de inicio de sesión.
+Se verifica si el usuario está bloqueado por intentos fallidos.
+Si se envía un comentario (método POST) y el usuario no está bloqueado, se inserta el comentario en la base de datos.
+Se obtienen todos los comentarios existentes y se renderiza la página con el formulario de comentarios y la lista de comentarios.
+Ejecución de la Aplicación
+ 
+init_db(): Se llama para inicializar la base de datos al iniciar la aplicación.
+app.run(debug=True): Inicia el servidor Flask en modo de depuración, lo que permite ver errores y realizar cambios en tiempo real.
